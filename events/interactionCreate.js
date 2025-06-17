@@ -1,7 +1,8 @@
-const {Events, MessageFlags, Collection} = require("discord.js");
-const config = require("../config");
+import { Events, MessageFlags, Collection } from "discord.js";
 
-module.exports = {
+import config from "../config.js";
+
+export default {
   name: Events.InteractionCreate,
   async execute(interaction) {
     if (interaction.isMessageComponent()) return;
@@ -42,7 +43,7 @@ module.exports = {
       });
     }
 
-    const {cooldowns} = interaction.client;
+    const { cooldowns } = interaction.client;
 
     if (!cooldowns.has(command.name)) {
       cooldowns.set(command.name, new Collection());

@@ -1,4 +1,4 @@
-const {db, users} = require("../db");
+import { db, users } from "../db.js";
 
 async function getBalance(userId) {
   const snap = await users.doc(userId).get();
@@ -10,7 +10,7 @@ async function addBalance(userId, amount) {
   await db.runTransaction(async (tx) => {
     const doc = await tx.get(ref);
     const current = doc.exists ? doc.data().balance : 0;
-    tx.set(ref, {balance: current + amount}, {merge: true});
+    tx.set(ref, { balance: current + amount }, { merge: true });
   });
 }
 
@@ -29,8 +29,4 @@ async function checkBalance(userId, amount) {
   };
 }
 
-module.exports = {
-  getBalance,
-  addBalance,
-  checkBalance,
-};
+export { getBalance, addBalance, checkBalance };

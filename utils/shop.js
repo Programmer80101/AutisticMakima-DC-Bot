@@ -1,8 +1,7 @@
-require("dotenv");
-const {shopItems} = require("../db");
-const {getBalance, addBalance} = require("./balance");
-const {getItemId} = require("../utils");
-const config = require("../config");
+import { getBalance, addBalance } from "./balance.js";
+import { shopItems } from "../db.js";
+import { getItemId } from "../utils.js";
+import config from "../config.js";
 
 async function getAllShopItems() {
   const snapshot = await shopItems.get();
@@ -68,14 +67,14 @@ async function upsertShopItem(id, data) {
 async function removeShopItemByName(itemName) {
   const snapshot = await shopItems.where("name", "==", itemName).get();
   if (snapshot.empty) {
-    return {error: true, message: `Item with name *${itemName}* not found.`};
+    return { error: true, message: `Item with name *${itemName}* not found.` };
   }
 
   const batch = shopItems.firestore.batch();
   snapshot.docs.forEach((doc) => batch.delete(doc.ref));
   await batch.commit();
 
-  return {error: false, message: `Successfully removed item *${itemName}*.`};
+  return { error: false, message: `Successfully removed item *${itemName}*.` };
 }
 
 async function checkBuyItem(userId, itemName, quantity = 1) {
@@ -139,7 +138,7 @@ async function buyItem(userId, item, quantity = 1) {
   });
 }
 
-module.exports = {
+export {
   getShopItemByName,
   getShopItemById,
   getAllShopItems,

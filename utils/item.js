@@ -1,10 +1,10 @@
-const {getInventory, modifyInventoryItem} = require("./inventory");
-const {getShopItemById} = require("./shop");
+import { getInventory, modifyInventoryItem } from "./inventory.js";
+import { getShopItemById } from "./shop.js";
 
 async function checkUseItem(userId, itemId) {
   const shopItem = await getShopItemById(itemId);
 
-  if (!shopItem) {
+  if (!shopItem) { 
     return {
       error: true,
       title: "❌ Item not found",
@@ -33,7 +33,4 @@ async function useItem(userId, itemId) {
   await modifyInventoryItem(userId, itemId, -1);
 }
 
-module.exports = {
-  checkUseItem,
-  useItem,
-};
+export { checkUseItem, useItem };

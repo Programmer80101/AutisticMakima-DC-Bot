@@ -1,17 +1,21 @@
-require("dotenv").config();
-require("./db");
-const {registerCache} = require("./cache");
-const {Client, GatewayIntentBits, Collection} = require("discord.js");
-const fs = require("node:fs");
-const path = require("node:path");
-const axios = require("axios");
+import { Client, GatewayIntentBits, Collection } from "discord.js";
+import express from "express";
 
-const express = require("express");
+import fs from "node:fs";
+import path from "node:path";
+import { pathToFileURL } from "node:url";
+
+import { getAllShopItems } from "./utils/shop.js";
+import { registerCache } from "./cache.js";
+import "./config.js";
+import "./db.js";
+
+const dirname = import.meta.dirname;
+
 const app = express();
 
 // Cache Registration
 
-const {getAllShopItems} = require("./utils/shop");
 registerCache("shopItems", getAllShopItems);
 
 // Endpoints
@@ -27,16 +31,11 @@ app.listen(PORT, () => {
   console.log(`✅ Server started at port: ${PORT}`);
 });
 
-// Self Ping
+// Jobs
 
-const pingUrl = process.env.URL + "/ping";
-setInterval(async () => {
-  try {
-    await axios.get(pingUrl);
-  } catch (error) {
-    console.error("❌ Self Ping failed: ", error);
-  }
-}, 3 * 60 * 1000);
+import selfPing from "./jobs/selfPing.js";
+
+selfPing(10);
 
 // Bot Setup
 
@@ -52,7 +51,7 @@ const client = new Client({
 client.commands = new Collection();
 client.cooldowns = new Collection();
 
-const foldersPath = path.join(__dirname, "commands");
+const foldersPath = path.join(dirname, "commands");
 const commandFolders = fs.readdirSync(foldersPath);
 
 // Command Handler
@@ -64,7 +63,9 @@ for (const folder of commandFolders) {
     .filter((file) => file.endsWith(".js"));
   for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
-    const command = require(filePath);
+    const commandModule = await import(pathToFileURL(filePath).href);
+    const command = commandModule.default;
+
     if ("data" in command && "execute" in command) {
       client.commands.set(command.data.name, command);
     } else {
@@ -77,14 +78,16 @@ for (const folder of commandFolders) {
 
 // Event Handler
 
-const eventsPath = path.join(__dirname, "events");
+const eventsPath = path.join(dirname, "events");
 const eventFiles = fs
   .readdirSync(eventsPath)
   .filter((file) => file.endsWith(".js"));
 
 for (const file of eventFiles) {
   const filePath = path.join(eventsPath, file);
-  const event = require(filePath);
+  const eventModule = await import(pathToFileURL(filePath).href);
+  const event = eventModule.default;
+
   if (event.once) {
     client.once(event.name, (...args) => event.execute(...args));
   } else {

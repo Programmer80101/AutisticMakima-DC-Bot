@@ -1,5 +1,5 @@
-const {db, users} = require("../db");
-const {FieldValue} = require("firebase-admin").firestore;
+import { FieldValue } from "firebase-admin/firestore";
+import { db, users } from "../db.js";
 
 async function getInventory(userId) {
   const snap = await users.doc(userId).get();
@@ -18,7 +18,7 @@ async function modifyInventoryItem(userId, itemId, delta) {
       throw new Error(`Cannot reduce below zero: have ${current}`);
     }
     if (updated === 0) {
-      tx.update(userRef, {[`items.${itemId}`]: FieldValue.delete()});
+      tx.update(userRef, { [`items.${itemId}`]: FieldValue.delete() });
     } else {
       tx.set(
         userRef,
@@ -36,7 +36,4 @@ async function modifyInventoryItem(userId, itemId, delta) {
   });
 }
 
-module.exports = {
-  getInventory,
-  modifyInventoryItem,
-};
+export { getInventory, modifyInventoryItem };

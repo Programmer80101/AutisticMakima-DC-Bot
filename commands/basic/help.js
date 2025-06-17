@@ -1,11 +1,12 @@
-const {createCommandGuideEmbed, getRandomTip} = require("../../utils");
-const {SlashCommandBuilder} = require("discord.js");
-const commandsData = require("../../commands");
-const config = require("../../config");
+import { SlashCommandBuilder } from "discord.js";
 
-const command = commandsData.basic.commands.help;
+import { createCommandGuideEmbed, getRandomTip } from "../../utils.js";
+import commandConfig from "../../commands.js";
+import config from "../../config.js";
 
-const fields = Object.values(commandsData).map((category) => ({
+const command = commandConfig.basic.commands.help;
+
+const fields = Object.values(commandConfig).map((category) => ({
   name: `${category.emoji} ${category.name}`,
   value:
     Object.values(category.commands)
@@ -17,19 +18,19 @@ const helpEmbed = {
   color: config.embed.color.default,
   title: "📘 Command Guide",
   description: "List of all available commands with categories!",
-  footer: {text: getRandomTip(commandsData.basic.name, command.name)},
+  footer: { text: getRandomTip(commandConfig.basic.name, command.name) },
   fields,
 };
 
 const executeCommand = async (source, text) => {
   if (!text) {
-    return await source.reply({embeds: [helpEmbed]});
+    return await source.reply({ embeds: [helpEmbed] });
   }
 
-  await source.reply({embeds: [createCommandGuideEmbed(text)]});
+  await source.reply({ embeds: [createCommandGuideEmbed(text)] });
 };
 
-module.exports = {
+export default {
   ...command,
   data: new SlashCommandBuilder()
     .setName(command.name)

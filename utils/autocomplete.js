@@ -1,4 +1,4 @@
-const {getCache} = require("../cache");
+import { getCache } from "../cache.js";
 
 const autoCompleteShopItems = async (interaction) => {
   const focusedValue = interaction.options.getFocused();
@@ -11,10 +11,8 @@ const autoCompleteShopItems = async (interaction) => {
     .slice(0, 25);
 
   await interaction.respond(
-    filtered.map((choice) => ({name: choice, value: choice}))
+    filtered.map((choice) => ({ name: choice, value: choice }))
   );
 };
 
-module.exports = {
-  autoCompleteShopItems,
-};
+export { autoCompleteShopItems };

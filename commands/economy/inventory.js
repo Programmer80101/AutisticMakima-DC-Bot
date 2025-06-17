@@ -1,11 +1,12 @@
-const {SlashCommandBuilder} = require("discord.js");
-const commandsData = require("../../commands");
-const {getRandomTip} = require("../../utils");
-const {getInventory} = require("../../utils/inventory");
-const {getShopItemById} = require("../../utils/shop");
-const config = require("../../config");
+import { SlashCommandBuilder } from "discord.js";
 
-const command = commandsData.economy.commands.inventory;
+import { getInventory } from "../../utils/inventory.js";
+import { getShopItemById } from "../../utils/shop.js";
+import { getRandomTip } from "../../utils.js";
+import commandConfig from "../../commands.js";
+import config from "../../config.js";
+
+const command = commandConfig.economy.commands.inventory;
 
 const sendInventory = async (source, user) => {
   const inv = (await getInventory(user.id)) || {};
@@ -31,14 +32,14 @@ const sendInventory = async (source, user) => {
             },
           ],
     footer: {
-      text: getRandomTip(commandsData.economy.name, command.name),
+      text: getRandomTip(commandConfig.economy.name, command.name),
     },
   };
 
-  await source.reply({embeds: [invEmbed]});
+  await source.reply({ embeds: [invEmbed] });
 };
 
-module.exports = {
+export default {
   ...command,
   data: new SlashCommandBuilder()
     .setName(command.name)

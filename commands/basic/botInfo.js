@@ -1,10 +1,11 @@
-const {SlashCommandBuilder} = require("discord.js");
-const osu = require("node-os-utils");
-const commandsData = require("../../commands");
-const {getRandomTip} = require("../../utils");
-const config = require("../../config");
+import { SlashCommandBuilder } from "discord.js";
+import os from "node-os-utils";
 
-const command = commandsData.basic.commands.botInfo;
+import { getRandomTip } from "../../utils.js";
+import commandConfig from "../../commands.js";
+import config from "../../config.js";
+
+const command = commandConfig.basic.commands.botInfo;
 
 const thresholds = {
   cpu: [80, 95],
@@ -17,9 +18,9 @@ const getInfoEmbed = async (client) => {
 
   const latency = Math.round(client.ws.ping);
   const uptimeInSeconds = Math.floor(client.uptime / 1000);
-  const cpuUsage = await osu.cpu.usage();
+  const cpuUsage = await os.cpu.usage();
 
-  const memoryInfo = await osu.mem.used();
+  const memoryInfo = await os.mem.used();
   const totalMemory = Math.round(memoryInfo.totalMemMb);
   const memoryUsed = Math.round(memoryInfo.usedMemMb);
 
@@ -96,12 +97,12 @@ const getInfoEmbed = async (client) => {
     description: "All necessary information about the bot!",
     fields: fields,
     footer: {
-      text: getRandomTip(commandsData.basic.name, command.name),
+      text: getRandomTip(commandConfig.basic.name, command.name),
     },
   };
 };
 
-module.exports = {
+export default {
   ...command,
   data: new SlashCommandBuilder()
     .setName(command.name)
@@ -114,6 +115,6 @@ module.exports = {
   },
 
   async prefix(message, args) {
-    await message.reply({embeds: [await getInfoEmbed(message.client)]});
+    await message.reply({ embeds: [await getInfoEmbed(message.client)] });
   },
 };

@@ -1,14 +1,15 @@
-const {
+import {
   SlashCommandBuilder,
   PermissionFlagsBits,
   MessageFlags,
-} = require("discord.js");
-const commandsData = require("../../adminCommands");
-const {addBalance} = require("../../utils/balance");
+} from "discord.js";
+
+import commandsData from "../../adminCommands.js";
+import { addBalance } from "../../utils/balance.js";
 
 const command = commandsData.economy.commands.addbalance;
 
-module.exports = {
+export default {
   ...command,
   data: new SlashCommandBuilder()
     .setName(command.name)

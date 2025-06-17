@@ -2,7 +2,7 @@ const _cache = {};
 
 function registerCache(key, fn) {
   if (_cache[key]) {
-    console.warn(`Cache for ${key} already exists. Overwriting...`);
+    console.warn(`🔄 Cache for ${key} already exists. Overwriting...`);
   }
 
   _cache[key] = {
@@ -16,7 +16,7 @@ async function initCache() {
   await Promise.all(
     entries.map(async ([key, cache]) => {
       cache.data = await cache.loader();
-      console.log(`Cache for ${key} initialized.`);
+      console.log(`💾 Cache for ${key} initialized.`);
     })
   );
 }
@@ -24,18 +24,14 @@ async function initCache() {
 function getCache(key) {
   const cache = _cache[key];
   if (!cache) {
-    throw new Error(`Cache for ${key} not found.`);
+    throw new Error(`❌ Cache for ${key} not found.`);
   }
 
   if (!cache.data) {
-    throw new Error(`Cache for ${key} not initialized.`);
+    throw new Error(`❌ Cache for ${key} not initialized.`);
   }
 
   return cache.data;
 }
 
-module.exports = {
-  registerCache,
-  initCache,
-  getCache,
-};
+export { registerCache, initCache, getCache };

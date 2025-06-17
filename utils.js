@@ -1,5 +1,5 @@
-const commandsData = require("./commands.js");
-const config = require("./config.js");
+import commandConfig from "./commands.js";
+import config from "./config.js";
 
 function toCamelCase(str) {
   return str
@@ -9,11 +9,7 @@ function toCamelCase(str) {
 }
 
 function getItemId(name) {
-  return name
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "_")
-    .replace(/^-+|-+$/g, "");
+  return toCamelCase(name);
 }
 
 const getRandomValue = (obj) => {
@@ -24,9 +20,10 @@ const getRandomValue = (obj) => {
 
 const getRandomTip = (category, exception = "") => {
   const id = toCamelCase(category);
-  const keys = Object.keys(config.tips[id]).filter((key) => key !== exception);
+  const commands = commandConfig[id].commands;
+  const keys = Object.keys(commands).filter((key) => key !== exception);
   const randomKey = keys[Math.floor(Math.random() * keys.length)];
-  return getRandomValue(config.tips[id][randomKey]);
+  return getRandomValue(commands[randomKey].tips);
 };
 
 const parseTime = (string) => {
@@ -66,7 +63,7 @@ const parseTime = (string) => {
 const createCommandGuideEmbed = (name) => {
   const query = name.toLowerCase();
 
-  for (const category of Object.values(commandsData)) {
+  for (const category of Object.values(commandConfig)) {
     for (const cmd of Object.values(category.commands)) {
       if (
         cmd.name.toLowerCase() === query ||
@@ -136,7 +133,7 @@ const createCommandGuideEmbed = (name) => {
     }
   }
 
-  for (const category of Object.values(commandsData)) {
+  for (const category of Object.values(commandConfig)) {
     if (category.name.toLowerCase() === query) {
       const commandsList = Object.values(category.commands).map((cmd) => ({
         name: config.prefix + cmd.name,
@@ -160,12 +157,12 @@ const createCommandGuideEmbed = (name) => {
     description: `No command or category found matching \`${name}\`.`,
     color: config.embed.color.red,
     footer: {
-      text: config.tips.basic.help.default,
+      text: commandConfig.basic.commands.help.default,
     },
   };
 };
 
-module.exports = {
+export {
   createCommandGuideEmbed,
   parseTime,
   getItemId,

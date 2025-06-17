@@ -1,10 +1,11 @@
-const {SlashCommandBuilder} = require("discord.js");
-const commandsData = require("../../commands");
-const {getRandomTip} = require("../../utils");
-const {getBalance} = require("../../utils/balance");
-const config = require("../../config");
+import { SlashCommandBuilder } from "discord.js";
 
-const command = commandsData.economy.commands.balance;
+import { getBalance } from "../../utils/balance.js";
+import { getRandomTip } from "../../utils.js";
+import commandConfig from "../../commands.js";
+import config from "../../config.js";
+
+const command = commandConfig.economy.commands.balance;
 
 const sendBalance = async (source, user) => {
   const balance = await getBalance(user.id);
@@ -19,14 +20,14 @@ const sendBalance = async (source, user) => {
       },
     ],
     footer: {
-      text: getRandomTip(commandsData.economy.name, command.name),
+      text: getRandomTip(commandConfig.economy.name, command.name),
     },
   };
 
-  await source.reply({embeds: [balanceEmbed]});
+  await source.reply({ embeds: [balanceEmbed] });
 };
 
-module.exports = {
+export default {
   ...command,
   data: new SlashCommandBuilder()
     .setName(command.name)

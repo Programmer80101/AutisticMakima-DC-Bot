@@ -1,11 +1,11 @@
-const {Events} = require("discord.js");
-const {initCache} = require("../cache");
+import { Events } from "discord.js";
+import { initCache } from "../cache.js";
 
-module.exports = {
+export default {
   name: Events.ClientReady,
   once: true,
   async execute(client) {
     await initCache();
-    console.log(`Ready! Logged in as ${client.user.tag}`);
+    console.log(`🤖 Logged in as ${client.user.tag}`);
   },
 };

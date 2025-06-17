@@ -1,8 +1,9 @@
-const {SlashCommandBuilder} = require("discord.js");
-const commandsData = require("../../commands");
-const config = require("../../config.js");
+import { SlashCommandBuilder } from "discord.js";
 
-const command = commandsData.basic.commands.guide;
+import commandConfig from "../../commands.js";
+import config from "../../config.js";
+
+const command = commandConfig.basic.commands.guide;
 
 function joinedBefore(member, cutoffDate) {
   return member.joinedTimestamp < cutoffDate.getTime();
@@ -51,7 +52,7 @@ const sendGuide = async (source, userId) => {
   });
 };
 
-module.exports = {
+export default {
   ...command,
   data: new SlashCommandBuilder()
     .setName(command.name)
