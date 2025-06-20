@@ -103,7 +103,7 @@ export const createCommandGuideEmbed = (name: string): EmbedBuilder => {
         const embed = new EmbedBuilder()
           .setColor(colors.embed.status.info)
           .setTitle(`Command Guide: \`${prefix}${cmd.name}\``)
-          .setDescription(cmd.description || "")
+          .setDescription(" ")
           .setFields(fields)
           .setFooter({ text: getRandomTip(category.name, cmd.name) });
 
@@ -124,7 +124,7 @@ export const createCommandGuideEmbed = (name: string): EmbedBuilder => {
 
       const embed = new EmbedBuilder()
         .setTitle(`${category.emoji} ${category.name} Commands`)
-        .setDescription(category.description)
+        .setDescription(" ")
         .setColor(colors.embed.status.info)
         .setFields(commandsList.filter((cmd) => cmd !== undefined))
         .setFooter({
