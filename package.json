@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc",
     "typecheck": "tsc --noEmit",
-    "start": "set NODE_ENV=production && npm run build && node --import=extensionless/register dist/index.js",
+    "start": "set NODE_ENV=production && node --import=extensionless/register dist/index.js",
     "dev": "set NODE_ENV=development && tsx watch index.ts",
     "update": "set NODE_ENV=development && tsx scripts/update.ts",
     "update:prod": "set NODE_ENV=production && tsx scripts/update.ts"
