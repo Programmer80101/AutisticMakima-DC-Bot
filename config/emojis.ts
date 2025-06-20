@@ -3,7 +3,7 @@ const emojis = {
     coin: "🪙",
   },
   item: {
-    moneyBag: "💰",
+    moneyBag: "<:starCoin:1385566118244257875>",
     chest: "📦",
   },
   status: {
