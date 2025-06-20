@@ -38,6 +38,7 @@ app.listen(PORT, () => {
 // Jobs
 
 import selfPing from "./jobs/self-ping";
+import { fileExt } from "./config";
 
 selfPing(10);
 
@@ -64,7 +65,7 @@ for (const folder of commandFolders) {
   const commandsPath = path.join(commandsDir, folder);
   const commandFiles = fs
     .readdirSync(commandsPath)
-    .filter((file) => file.endsWith(".ts"));
+    .filter((file) => file.endsWith(fileExt));
   for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
     const modulePath = pathToFileURL(filePath).href;
@@ -87,7 +88,7 @@ for (const folder of commandFolders) {
 const eventsDir = path.join(dirname, "events", "discord");
 const eventFiles = fs
   .readdirSync(eventsDir)
-  .filter((file) => file.endsWith(".ts"));
+  .filter((file) => file.endsWith(fileExt));
 
 for (const file of eventFiles) {
   const filePath = path.join(eventsDir, file);

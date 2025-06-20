@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import { capitalizeFirstLetter } from "./utility/string";
 
 const envMode = process.env.NODE_ENV?.trim() ?? "production";
-const envFile = path.resolve(import.meta.dirname, `.env.${envMode}`);
+const envFile = path.resolve(process.cwd(), `.env.${envMode}`);
 
 dotenv.config({ path: envFile });
 
@@ -17,6 +17,11 @@ if (envMode != "development") {
 export const isDev = envMode === "development";
 export const isProd = !isDev;
 
+export const fileExt = isDev ? ".ts" : ".js";
+export const rootDir = isDev
+  ? import.meta.dirname
+  : path.resolve(process.cwd(), "dist");
+
 // mod: {
 //   somethingWentWrong: "⚠️ Something went wrong",
 //   selfSabotage: "🔰 Self Sabotage",
@@ -24,4 +29,4 @@ export const isProd = !isDev;
 //   insufficientPermissions: "⛔ Insufficient Permissions",
 //   invalidArguments: "❌ Invalid Arguments",
 //   invalidDuration: "⏱️ Invalid Duration",
-// },
+// }
