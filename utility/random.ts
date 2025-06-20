@@ -13,7 +13,7 @@ export function pickWeightedOption<K extends string>(
 ): K {
   const values = Object.keys(options) as K[];
   const weights = values.map((v) => options[v]);
-  return weighted.select(values, weights) as K;
+  return weighted(values, weights) as K;
 }
 
 export const getRandomTip = (
