@@ -10,10 +10,6 @@ dotenv.config({ path: envFile });
 
 console.log(`🔒 Environment Mode: ${capitalizeFirstLetter(envMode)}`);
 
-if (envMode != "development") {
-  console.log(`ℹ️ You are not in development mode!`);
-}
-
 export const isDev = envMode === "development";
 export const isProd = !isDev;
 
