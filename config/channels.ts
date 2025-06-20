@@ -1,11 +1,12 @@
+import { isDev } from "../config";
+
 const channels = {
   allowedChannels: [
-    // " ", // juice wrld coin
-    // " ", // staff bot commands
-    // " ", // bot commands
-    "1384146194304860325", // dev -> bot
+    isDev ? "1384146194304860325" : "1383090675137908879", // bot
   ],
-  defaultAllowedChannelId: "1384146194304860325", // dev -> bot
+  defaultAllowedChannelId: isDev
+    ? "1384146194304860325" // dev -> bot
+    : "1383090675137908879", // prod -> bot
 };
 
 export default channels;
