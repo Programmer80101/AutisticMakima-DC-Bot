@@ -8,7 +8,7 @@ import {
 } from "discord.js";
 
 import { validateItemUse, useItem, getItemIdByName } from "../../firebase/item";
-import { autoCompleteShopItems } from "../../firebase/autocomplete";
+import { autoCompleteShopItems } from "../../utility/autocomplete";
 import { getShopItemIdByName } from "../../firebase/shop";
 
 import { createCommandGuideEmbed } from "../../utility/embed";

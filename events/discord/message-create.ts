@@ -16,7 +16,7 @@ const prefix = bot.prefix;
 export default {
   name: Events.MessageCreate,
   async execute(message: Message) {
-    if (message.author.bot) return;
+    if (message.author.bot || message.content.length <= 1) return;
     if (!message.guildId || !message.inGuild()) {
       return await message.reply({
         content: `You can only use my commands in <#${channels.allowedChannels}>!`,

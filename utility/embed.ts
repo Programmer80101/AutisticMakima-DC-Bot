@@ -42,11 +42,11 @@ export const createCommandGuideEmbed = (name: string): EmbedBuilder => {
   for (const category of Object.values(commands)) {
     for (const cmd of Object.values(category.commands)) {
       if (
-        cmd.name.toLowerCase() === query ||
-        (cmd.aliases &&
-          cmd.aliases.some(
-            (alias: string): boolean => alias.toLowerCase() === query
-          ))
+        cmd.status === "enabled" &&
+        cmd.aliases &&
+        cmd.aliases.some(
+          (alias: string): boolean => alias.toLowerCase() === query
+        )
       ) {
         const fields = [
           {

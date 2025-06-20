@@ -1,5 +1,6 @@
 import { getInventory, modifyInventoryItem } from "./inventory";
 import { getShopItemById, type ShopItem } from "./shop";
+import type { Item } from "../types";
 import items from "../config/items";
 
 export function getItemIdByName(name: string): string | null {
@@ -24,15 +25,6 @@ export function getItemByName(name: string) {
   }
 
   return null;
-}
-
-export interface Item {
-  id: string;
-  emoji: string;
-  name: string;
-  description: string;
-  autoClaim: boolean;
-  rarity: "common" | "uncommon" | "rare" | "epic" | "legendary";
 }
 
 export type ItemUseResult =

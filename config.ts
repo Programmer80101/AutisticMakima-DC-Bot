@@ -11,7 +11,7 @@ dotenv.config({ path: envFile });
 console.log(`🔒 Environment Mode: ${capitalizeFirstLetter(envMode)}`);
 
 if (envMode != "development") {
-  console.log(`⚠️ Alert: You are not in development mode!`);
+  console.log(`ℹ️ You are not in development mode!`);
 }
 
 export const isDev = envMode === "development";

@@ -12,13 +12,9 @@ import {
   GuildTextBasedChannel,
 } from "discord.js";
 
-import {
-  validatePurchase,
-  buyItem,
-  getShopItemByName,
-} from "../../firebase/shop";
+import { validatePurchase, buyItem } from "../../firebase/shop";
 import { modifyInventoryItem } from "../../firebase/inventory";
-import { autoCompleteShopItems } from "../../firebase/autocomplete";
+import { autoCompleteShopItems } from "../../utility/autocomplete";
 import { createCommandGuideEmbed } from "../../utility/embed";
 import commands from "../../config/commands";
 import colors from "../../config/colors";

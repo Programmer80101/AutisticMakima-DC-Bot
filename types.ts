@@ -50,3 +50,22 @@ export interface CommandShape {
   notes?: string[];
   tips: TipMap;
 }
+
+// Items
+
+export interface BaseItem {
+  id: string;
+  emoji: string;
+  name: string;
+  description: string;
+  autoClaim: boolean;
+  rarity: "common" | "uncommon" | "rare" | "epic" | "legendary";
+  [key: string]: any;
+}
+
+export type LootableItem = BaseItem & {
+  minLoot: number;
+  maxLoot: number;
+};
+
+export type Item = BaseItem | LootableItem;

@@ -1,22 +1,22 @@
 const colors = {
   embed: {
     status: {
-      warning: 0xd4d440,
-      success: 0x27c027,
-      error: 0xd43636,
-      info: 0x0099ff,
-      pending: 0x0055aa,
+      success: 0x57f287,
+      error: 0xed4245,
+      warning: 0xfaa61a,
+      info: 0x1abc9c,
+      pending: 0x747f8d,
     },
-    neutral: 0x636363,
-    purple: 0x992bff,
-    gold: 0xffd900,
+    neutral: 0x99aab5,
+    gold: 0xffd83d,
+    purple: 0x7851a9,
   },
   rarity: {
-    common: 0x0,
-    uncommon: 0x1,
-    rare: 0x2,
-    epic: 0x3,
-    legendary: 0x4,
+    common: 0x2f3136,
+    uncommon: 0x3ba55c,
+    rare: 0x7289da,
+    epic: 0x9932cc,
+    legendary: 0xe91e63,
   },
 };
 
