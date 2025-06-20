@@ -4,6 +4,7 @@ import {
   ChatInputCommandInteraction,
   EmbedBuilder,
   Message,
+  MessageFlags,
 } from "discord.js";
 
 import adminCommands from "../../config/admin-commands";
@@ -30,7 +31,7 @@ export default {
   async execute(interaction: ChatInputCommandInteraction) {
     const embed = new EmbedBuilder()
       .setTitle("📙 Emoji Reference")
-      .setColor(0xffd700) // gold
+      .setColor(0xffd700)
 
       .addFields(
         {
@@ -55,7 +56,7 @@ export default {
         }
       );
 
-    await interaction.reply({ embeds: [embed], ephemeral: true });
+    await interaction.reply({ embeds: [embed], flags: MessageFlags.Ephemeral });
   },
 
   async prefix(_message: Message) {
