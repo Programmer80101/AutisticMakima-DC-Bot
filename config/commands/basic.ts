@@ -35,28 +35,22 @@ const basic = {
           category: `Use ${prefix}help [category] to see a list of commands in a category.`,
         },
       },
-      info: {
-        name: "info",
-        emoji: "ℹ️",
-        cooldown: 10,
-        description: "Provides all necessary about the bot.",
-        aliases: ["info"],
-        usage: `${prefix}info`,
+      metrics: {
+        name: "metrics",
+        emoji: "📊",
+        cooldown: 5,
+        description: "Shows important metrics about the bot.",
+        aliases: ["metrics", "stats", "statistics"],
+        usage: `${prefix}metrics`,
         args: [],
-        examples: [
-          {
-            command: `${prefix}info`,
-            note: "Displays necessary information about the bot.",
-          },
-        ],
         tips: {
-          default: `Use ${prefix}info to see information about the bot.`,
+          default: `Use ${prefix}metrics to see important metrics about the bot.`,
         },
       },
       user: {
         name: "user",
         emoji: "👤",
-        cooldown: 5,
+        cooldown: 3,
         description: "Displays information about a user.",
         aliases: ["user", "u"],
         usage: `${prefix}user [user]`,

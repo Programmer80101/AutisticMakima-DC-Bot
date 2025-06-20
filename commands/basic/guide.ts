@@ -8,10 +8,10 @@ import {
 import currencies from "../../config/currencies";
 import commands from "../../config/commands";
 import colors from "../../config/colors";
-import server from "../../config/server";
-import bot from "../../config/bot";
-import users from "../../config/users";
 import events from "../../config/events";
+import server from "../../config/server";
+import users from "../../config/users";
+import bot from "../../config/bot";
 
 const prefix = bot.prefix;
 const command = commands.basic.commands.guide;
@@ -32,22 +32,22 @@ const sendGuide = async (
     return;
   }
 
-  let description = `👋 Hey! It's **${source.client.user.displayName}**!`;
-
-  description += ` \n\n💰 You can earn ${currencies.coin.emoji} ${currencies.coin.name} by using certain commands or by chatting in <#${events.lootDrop.channelId}>.`;
-  description += ` Use \`${prefix}help\` to see a list of all commands that you can use.`;
-
-  description += ` \n\n📜 There are some rules that you need to follow while using the bot!`;
-  description += ` Use \`${prefix}rules\` to see the rules that you need to follow while using the bot.`;
-  description += ` If you break any of the rules, you will be warned or even banned from using the bot!`;
-
-  description += ` \n\n💡 We are accpeting suggestions for the bot!`;
-  description += ` If you have any suggestions, feel free to DM <@${users.owner.id}>.`;
+  const description = [
+    `👋 Hey! It's **${source.client.user.displayName}**!`,
+    `I am the bot for **${guild.name}**! I have a currency called ${currencies.coin.emoji} ${currencies.coin.name} that you can use to do various things in the server.`,
+    `\n\n💰 You can earn ${currencies.coin.emoji} ${currencies.coin.name} by using certain commands or by chatting in <#${events.lootDrop.channelId}>.`,
+    ` Use \`${prefix}help\` to see a list of all commands that you can use.`,
+    `\n\n📜 There are some rules that you need to follow while using the bot!`,
+    `Use \`${prefix}rules\` to see the rules that you need to follow while using the bot.`,
+    `If you break any of the rules, you will be warned or even banned from using the bot!`,
+    `\n\n💡 We are accepting suggestions for the bot!`,
+    `If you have any suggestions, feel free to DM <@${users.owner.id}>.`,
+  ];
 
   const guideEmbed = new EmbedBuilder()
     .setColor(colors.embed.status.info)
     .setTitle(`${command.emoji} Bot Guide`)
-    .setDescription(description)
+    .setDescription(description.join(" "))
     .setFooter({
       text: `Use ${prefix}help [command] to see how to use a specific command.`,
     });

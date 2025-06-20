@@ -25,7 +25,7 @@ const sendRules = async (source: ChatInputCommandInteraction | Message) => {
   description += `\n\n⚠️ If you break any of the rules, necessary action will be taken!`;
 
   const guideEmbed = {
-    color: colors.embed.status.success,
+    color: colors.embed.status.info,
     title: `${command.emoji} Bot Rules`,
     description: description,
     footer: {

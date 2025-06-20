@@ -51,7 +51,7 @@ const getUserEmbed = async (user: User, member: GuildMember | undefined) => {
   return new EmbedBuilder()
     .setColor(colors.embed.status.info)
     .setTitle(`User: ${user}`)
-    .setDescription("")
+    .setDescription("User Information")
     .addFields({
       name: "🆔 ID",
       value: user.id,

@@ -5,6 +5,10 @@ import {
   Message,
   SlashCommandBuilder,
 } from "discord.js";
+import { platform } from "os";
+
+import checkDiskSpace from "check-disk-space";
+import si from "systeminformation";
 import os from "node-os-utils";
 
 import { getRandomTip } from "../../utility/random";
@@ -12,24 +16,48 @@ import commands from "../../config/commands";
 import colors from "../../config/colors";
 import users from "../../config/users";
 
-const command = commands.basic.commands.info;
+const command = commands.basic.commands.metrics;
+
+const diskPath = platform() === "win32" ? "C:/" : "/";
 
 const thresholds: {
   cpu: [number, number];
+  disk: [number, number];
   memory: [number, number];
   ping: [number, number];
 } = {
   cpu: [80, 95],
+  disk: [80, 90],
   memory: [75, 90],
   ping: [120, 300],
 };
 
-const getInfoEmbed = async (client: Client) => {
+const getMetricsEmbed = async (client: Client): Promise<EmbedBuilder> => {
   const ownerId = users.owner.id;
 
   const latency = Math.round(client.ws.ping);
+
   const uptimeInSeconds = Math.floor((client.uptime ?? 0) / 1000);
+
   const cpuUsage = await os.cpu.usage();
+
+  const { free, size } = await checkDiskSpace(diskPath);
+  const diskUsage = Math.round(((size - free) / size) * 100);
+
+  const netStatsArray = await si.networkStats();
+
+  const totalSent = netStatsArray.reduce(
+    (sum, iface) => sum + iface.tx_bytes,
+    0
+  );
+
+  const totalReceived = netStatsArray.reduce(
+    (sum, iface) => sum + iface.rx_bytes,
+    0
+  );
+
+  const sentMb = (totalSent / 1024 / 1024).toFixed(2);
+  const receivedMb = (totalReceived / 1024 / 1024).toFixed(2);
 
   const memoryInfo = await os.mem.used();
   const totalMemory = Math.round(memoryInfo.totalMemMb);
@@ -55,6 +83,7 @@ const getInfoEmbed = async (client: Client) => {
 
   assignThresholds("Ping", latency, thresholds.ping);
   assignThresholds("CPU Usage", cpuUsage, thresholds.cpu);
+  assignThresholds("Disk Usage", diskUsage, thresholds.disk);
   assignThresholds("Memory Usage", memoryUsage, thresholds.memory);
 
   const fields = [
@@ -72,14 +101,27 @@ const getInfoEmbed = async (client: Client) => {
     {
       name: "⚡ Latency",
       value: `${latency}ms`,
+      inline: true,
     },
     {
       name: "🗄️ CPU Usage",
       value: `${cpuUsage.toFixed(2)}%`,
+      inline: true,
+    },
+    {
+      name: "💾 Disk Usage",
+      value: `${diskUsage}%`,
+      inline: true,
     },
     {
       name: "🧠 Memory",
       value: `${memoryUsage.toFixed(2)}%`,
+      inline: true,
+    },
+    {
+      name: "📡 Network I/O",
+      value: `⬆️ ${sentMb}MB / ⬇️ ${receivedMb}MB`,
+      inline: true,
     },
   ];
 
@@ -108,8 +150,8 @@ const getInfoEmbed = async (client: Client) => {
 
   return new EmbedBuilder()
     .setColor(embedColor)
-    .setTitle("🤖 Bot Information")
-    .setDescription("All necessary information about the bot!")
+    .setTitle("🤖 Bot Metrics")
+    .setDescription("Important metrics about the bot!")
     .setFields(fields)
     .setFooter({
       text: getRandomTip(commands.basic.name, command.name),
@@ -124,11 +166,11 @@ export default {
 
   async execute(interaction: ChatInputCommandInteraction) {
     await interaction.reply({
-      embeds: [await getInfoEmbed(interaction.client)],
+      embeds: [await getMetricsEmbed(interaction.client)],
     });
   },
 
   async prefix(message: Message, _args: string[]) {
-    await message.reply({ embeds: [await getInfoEmbed(message.client)] });
+    await message.reply({ embeds: [await getMetricsEmbed(message.client)] });
   },
 };

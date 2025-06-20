@@ -31,6 +31,13 @@ export interface CommandArg {
   description: string;
 }
 
+export type CommandStatus =
+  | "enabled"
+  | "disabled"
+  | "temporarily_disabled"
+  | "removed"
+  | "coming_soon";
+
 export interface CommandShape {
   name: string;
   emoji: string;
@@ -41,4 +48,5 @@ export interface CommandShape {
   args?: CommandArg[];
   notes?: string | string[];
   tips: TipMap;
+  status?: CommandStatus;
 }
