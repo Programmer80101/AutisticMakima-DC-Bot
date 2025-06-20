@@ -43,9 +43,10 @@ export default {
       interaction.options.getInteger(
         adminCommands.economy.commands.modifybalance.args[0].name
       ) ?? 0;
-    const user = interaction.options.getUser(
-      adminCommands.economy.commands.modifybalance.args[1].name
-    )!;
+    const user =
+      interaction.options.getUser(
+        adminCommands.economy.commands.modifybalance.args[1].name
+      ) || interaction.user;
 
     await interaction.deferReply({
       flags: MessageFlags.Ephemeral,

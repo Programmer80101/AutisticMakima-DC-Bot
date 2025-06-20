@@ -8,7 +8,6 @@ import {
 
 import { CommandModule, BotClient } from "../../types";
 import { getStatusEmbed } from "../../utility/status-embed";
-import { isProd } from "../../config";
 
 import channels from "../../config/channels";
 import emojis from "../../config/emojis";
@@ -85,7 +84,7 @@ export default {
     timestamps?.set(interaction.user.id, now);
     setTimeout(() => timestamps?.delete(interaction.user.id), cooldownAmount);
 
-    if (command.status !== "enabled") {
+    if (command.status && command.status !== "enabled") {
       await interaction.reply({
         embeds: [getStatusEmbed(command.status)],
         flags: MessageFlags.Ephemeral,

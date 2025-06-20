@@ -1,17 +1,17 @@
 const emojis = {
   currency: {
-    coin: "🪙",
+    coin: "<:makimba:1385596334467186739>",
   },
   item: {
-    moneyBag: "<:starCoin:1385566118244257875>",
+    moneyBag: "<:bag_of_coins:1385569445023322194>",
     chest: "📦",
   },
   status: {
-    success: "✅",
-    error: "❌",
-    warning: "⚠️",
-    info: "ℹ️",
-    processing: "🔁",
+    success: "<:check:1385569419744247808>",
+    error: "<:cross:1385569433128407100>",
+    warning: "<:warning:1385570065008562256>",
+    info: "<:info:1385569360264822976>",
+    processing: "<a:loader:1385575727147257877>",
   },
   in: "📥",
   out: "📤",

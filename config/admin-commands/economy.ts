@@ -1,20 +1,28 @@
+import { CommandShape } from "../../types";
 import bot from "../bot";
 
 const prefix = bot.prefix;
 
-const economy = {
+const economy: {
+  economy: {
+    emoji: string;
+    name: string;
+    description: string;
+    footer: string;
+    commands: Record<string, Omit<CommandShape, "aliases" | "status" | "tips">>;
+  };
+} = {
   economy: {
     emoji: "💰",
     name: "Economy",
     description: "Economy commands for coins.",
-    footer: "These commands are available for all users.",
+    footer: "These commands are only available for admins.",
     commands: {
       shopset: {
         name: "shopset",
         cooldown: 10,
         emoji: "🛒",
         description: "Modify the shop items.",
-        aliases: ["ss", "shopset"],
         usage: `${prefix}shopset (item_name) [item_emoji] [item_description] [item_price] [item_stock] [item_auto_claim]`,
         args: [
           {
@@ -60,7 +68,6 @@ const economy = {
         cooldown: 10,
         emoji: "🛒",
         description: "Change the balance of a user.",
-        aliases: ["modifyBalance"],
         usage: `${prefix}modifyBalance (delta) [user]`,
         args: [
           {

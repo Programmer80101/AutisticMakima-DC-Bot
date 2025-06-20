@@ -3,7 +3,7 @@ import emojis from "./emojis.js";
 const currencies = {
   coin: {
     id: "coin",
-    name: "Coins",
+    name: "Makimbas",
     emoji: emojis.currency.coin,
   },
 };
