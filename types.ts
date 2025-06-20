@@ -34,19 +34,19 @@ export interface CommandArg {
 export type CommandStatus =
   | "enabled"
   | "disabled"
-  | "temporarily_disabled"
+  | "temporarilyDisabled"
   | "removed"
-  | "coming_soon";
+  | "comingSoon";
 
 export interface CommandShape {
   name: string;
   emoji: string;
   cooldown?: number;
+  status: CommandStatus;
   description: string;
   aliases: string[];
   usage: string;
-  args?: CommandArg[];
-  notes?: string | string[];
+  args: CommandArg[];
+  notes?: string[];
   tips: TipMap;
-  status?: CommandStatus;
 }

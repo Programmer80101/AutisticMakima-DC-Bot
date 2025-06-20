@@ -84,7 +84,7 @@ export const createCommandGuideEmbed = (name: string): EmbedBuilder => {
           });
         }
 
-        if (cmd.notes) {
+        if (cmd?.notes) {
           fields.push({
             name: "📄 Note",
             value: cmd.notes.join("\n"),
@@ -92,7 +92,7 @@ export const createCommandGuideEmbed = (name: string): EmbedBuilder => {
           });
         }
 
-        if (cmd.cooldown) {
+        if (cmd?.cooldown) {
           fields.push({
             name: "⏱️ Cooldown",
             value: `${cmd.cooldown}s`,
@@ -114,16 +114,19 @@ export const createCommandGuideEmbed = (name: string): EmbedBuilder => {
 
   for (const category of Object.values(commands)) {
     if (category.name.toLowerCase() === query) {
-      const commandsList = Object.values(category.commands).map((cmd) => ({
-        name: prefix + cmd.name,
-        value: cmd.description ?? "No description.",
-      }));
+      const commandsList = Object.values(category.commands).map((cmd) => {
+        if (cmd.status === "enabled")
+          return {
+            name: `${cmd.emoji} \`${cmd.name}\``,
+            value: cmd.description ?? "*No description provided.*",
+          };
+      });
 
       const embed = new EmbedBuilder()
         .setTitle(`${category.emoji} ${category.name} Commands`)
         .setDescription(category.description)
         .setColor(colors.embed.status.info)
-        .setFields(commandsList)
+        .setFields(commandsList.filter((cmd) => cmd !== undefined))
         .setFooter({
           text: getRandomTip(category.name),
         });

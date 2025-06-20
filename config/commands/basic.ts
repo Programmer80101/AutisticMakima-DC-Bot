@@ -1,7 +1,17 @@
+import { CommandShape } from "../../types";
 import bot from "../bot";
+
 const prefix = bot.prefix;
 
-const basic = {
+const basic: {
+  basic: {
+    emoji: string;
+    name: string;
+    description: string;
+    footer: string;
+    commands: Record<string, CommandShape>;
+  };
+} = {
   basic: {
     emoji: "🗒️",
     name: "Basic",
@@ -12,6 +22,7 @@ const basic = {
         name: "help",
         emoji: "❓",
         cooldown: 3,
+        status: "enabled",
         description: "Displays a list of all commands.",
         aliases: ["help", "h"],
         usage: `${prefix}help [category | command]`,
@@ -39,6 +50,7 @@ const basic = {
         name: "metrics",
         emoji: "📊",
         cooldown: 5,
+        status: "enabled",
         description: "Shows important metrics about the bot.",
         aliases: ["metrics", "stats", "statistics"],
         usage: `${prefix}metrics`,
@@ -51,6 +63,7 @@ const basic = {
         name: "user",
         emoji: "👤",
         cooldown: 3,
+        status: "enabled",
         description: "Displays information about a user.",
         aliases: ["user", "u"],
         usage: `${prefix}user [user]`,
@@ -71,6 +84,7 @@ const basic = {
         name: "ping",
         emoji: "🏓",
         cooldown: 3,
+        status: "enabled",
         description: "Checks the latency of the bot.",
         aliases: ["ping", "p", "latency", "l"],
         usage: `${prefix}ping`,
@@ -82,6 +96,7 @@ const basic = {
       guide: {
         name: "guide",
         emoji: "📖",
+        status: "enabled",
         description: "Guide for using the bot.",
         aliases: ["guide"],
         usage: `${prefix}guide`,
@@ -93,6 +108,7 @@ const basic = {
       rules: {
         name: "rules",
         emoji: "📜",
+        status: "enabled",
         description: "Rules for using the bot.",
         aliases: ["rules", "rules"],
         usage: `${prefix}rules`,

@@ -7,6 +7,9 @@ import {
 } from "discord.js";
 
 import { CommandModule, BotClient } from "../../types";
+import { getStatusEmbed } from "../../utility/status-embed";
+import { isProd } from "../../config";
+
 import channels from "../../config/channels";
 import emojis from "../../config/emojis";
 import users from "../../config/users";
@@ -81,6 +84,15 @@ export default {
 
     timestamps?.set(interaction.user.id, now);
     setTimeout(() => timestamps?.delete(interaction.user.id), cooldownAmount);
+
+    if (command.status !== "enabled") {
+      await interaction.reply({
+        embeds: [getStatusEmbed(command.status)],
+        flags: MessageFlags.Ephemeral,
+      });
+
+      return;
+    }
 
     try {
       await command.execute(interaction);

@@ -8,7 +8,7 @@ import {
 } from "discord.js";
 
 import { getInventory } from "../../firebase/inventory";
-import { getShopItemById, ShopItem } from "../../firebase/shop";
+import { getShopItemById } from "../../firebase/shop";
 import { getItemById } from "../../firebase/item";
 import { getRandomTip } from "../../utility/random";
 import commandConfig from "../../config/commands";

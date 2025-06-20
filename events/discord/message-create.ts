@@ -1,6 +1,9 @@
 import { Events, Message, Collection, GuildTextBasedChannel } from "discord.js";
 
 import { BotClient, CommandModule } from "../../types";
+import { getStatusEmbed } from "../../utility/status-embed";
+import { isProd } from "../../config";
+
 import handleLootDrop from "../loot-drop";
 import channels from "../../config/channels";
 import events from "../../config/events";
@@ -84,6 +87,14 @@ export default {
 
     timestamps?.set(message.author.id, now);
     setTimeout(() => timestamps?.delete(message.author.id), cooldownAmount);
+
+    if (command.status !== "enabled") {
+      await message.reply({
+        embeds: [getStatusEmbed(command.status)],
+      });
+
+      if (isProd) return;
+    }
 
     try {
       await command.prefix(message, args);

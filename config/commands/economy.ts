@@ -1,7 +1,18 @@
+import { CommandShape } from "../../types";
 import bot from "../bot";
+import currencies from "../currencies";
+
 const prefix = bot.prefix;
 
-const economy = {
+const economy: {
+  economy: {
+    emoji: string;
+    name: string;
+    description: string;
+    footer: string;
+    commands: Record<string, CommandShape>;
+  };
+} = {
   economy: {
     emoji: "💰",
     name: "Economy",
@@ -12,6 +23,7 @@ const economy = {
         name: "balance",
         emoji: "🪙",
         cooldown: 5,
+        status: "enabled",
         description: "Get your current balance.",
         aliases: ["balance", "bal"],
         usage: `${prefix}balance [user]`,
@@ -30,11 +42,13 @@ const economy = {
       },
       daily: {
         name: "daily",
-        emoji: "🪙",
+        emoji: "💸",
         cooldown: 5,
+        status: "enabled",
         description: "Collect your daily coins",
         aliases: ["daily"],
         usage: `${prefix}daily`,
+        args: [],
         tips: {
           default: `Use ${prefix}daily to collect your daily free coins!`,
         },
@@ -43,9 +57,11 @@ const economy = {
         name: "shop",
         emoji: "🛍️",
         cooldown: 10,
+        status: "enabled",
         description: "Check out the shop for cool items!",
         aliases: ["shop"],
         usage: `${prefix}shop`,
+        args: [],
         tips: {
           default: `Use ${prefix}shop to see cool items in the shop!`,
         },
@@ -54,6 +70,7 @@ const economy = {
         name: "buy",
         emoji: "🛒",
         cooldown: 5,
+        status: "enabled",
         description: "Buy an item from the shop!",
         aliases: ["buy"],
         usage: `${prefix}buy (item_name) [quantity]`,
@@ -80,9 +97,11 @@ const economy = {
         name: "inventory",
         emoji: "📦",
         cooldown: 5,
+        status: "enabled",
         description: "Check your inventory!",
         aliases: ["inv", "inven", "inventory"],
         usage: `${prefix}inventory`,
+        args: [],
         tips: {
           default: `Use ${prefix}inventory to see your inventory`,
         },
@@ -91,6 +110,7 @@ const economy = {
         name: "use",
         emoji: "🛠️",
         cooldown: 5,
+        status: "enabled",
         description: "Use an item from your inventory!",
         aliases: ["use"],
         usage: `${prefix}use (item_name) [quantity]`,
@@ -117,7 +137,8 @@ const economy = {
         name: "transfer",
         emoji: "🔄",
         cooldown: 10,
-        description: "Transfer coins to another user",
+        status: "comingSoon",
+        description: `Transfer ${currencies.coin.emoji} ${currencies.coin.name} to another user`,
         aliases: ["transfer"],
         usage: `${prefix}transfer (user) (amount) [reason]`,
         args: [
@@ -125,12 +146,12 @@ const economy = {
             name: "user",
             type: "user",
             required: true,
-            description: "The user you want to transfer coins to",
+            description: `The user you want to transfer ${currencies.coin.emoji} ${currencies.coin.name} to`,
           },
           {
             name: "amount",
             type: "integer",
-            required: false,
+            required: true,
             description: "Amount of coins to transfer",
           },
           {
